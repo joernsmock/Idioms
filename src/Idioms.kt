@@ -135,8 +135,6 @@ fun main(args: Array<String>) {
     var myFile = MyDir(".")
     var myFiles = myFile("Test").listFiles()
 
-// +++added a comment (Fri, 07 Aug 2020 11:47:51 +0200+++
-
     println(files?.size)
 
     // If not null and else shorthand
