@@ -1,3 +1,7 @@
+import java.awt.Rectangle
+import java.nio.file.Files
+import java.nio.file.Paths
+
 /*
  Idioms
 
@@ -133,14 +137,14 @@ fun main(args: Array<String>) {
         }
     }
     var myFile = MyDir(".")
-    var myFiles = myFile("Test").listFiles()
+    var myFiles1 = myFile.listFiles()
 
-    println(files?.size)
+    println(myFiles1?.size)
 
     // If not null and else shorthand
 
-    val files = File("Test").listFiles()
-    println(files?.size ?: "empty")
+    var myFiles2 = myFile.listFiles()
+    println(myFiles2?.size ?: "empty")
 
     // Executing a statement if null
 
@@ -149,7 +153,7 @@ fun main(args: Array<String>) {
 
     // Get first item of a possibly empty collection
 
-    val emails = x = 99 // might be empty
+    val emails = listOf("from@me", "to@home", "you@where") // might be empty
     val mainEmail = emails.firstOrNull() ?: ""
 
     // Execute if not null
@@ -162,7 +166,9 @@ fun main(args: Array<String>) {
 
     // Map nullable value if not null
 
-    var transformValue = 1
+    fun transformValue(i: Int): Int {
+        return 1
+    }
     var defaultValue = 0
     val mapped = value?.let { transformValue(it) } ?: defaultValue
 
@@ -219,13 +225,13 @@ fun main(args: Array<String>) {
 
     // This is equivalent to
 
-    fun theAnswer(): Int {
+    fun theAnswer2(): Int {
         return 42
     }
 
     // This can be effectively combined with other idioms, leading to shorter code. E.g. with the when-expression:
 
-    fun transform(color: String): Int = when (color) {
+    fun transform2(color: String): Int = when (color) {
         "Red" -> 0
         "Green" -> 1
         "Blue" -> 2
@@ -255,16 +261,24 @@ fun main(args: Array<String>) {
 
     // Configuring properties of an object (apply)
 
+    class Rectangle() {
+        var length = 0
+        var breadth = 0
+        var color = 0
+    }
+
     val myRectangle = Rectangle().apply {
         length = 4
         breadth = 5
         color = 0xFAFAFA
     }
-
     // This is useful for configuring properties that aren't present in the object constructor.
+
+
     // Java 7's try with resources
 
-    val stream = Files.newInputStream(Paths.get("/some/file.txt"))
+    val stream = Files.newInputStream(Paths.get("/some/file.txt")) // had to click twice here
+    // because Java's "Files" and "Paths" needed to be imported (IDEA IDE does that)
 
     stream.buffered().reader().use { reader ->
         println(reader.readText())
@@ -273,18 +287,20 @@ fun main(args: Array<String>) {
     // Convenient form for a generic function that requires the generic type information
 
     //  public final class Gson {
-    //     x=99
-    //     public <T> T fromJson(JsonElement json, Class<T> classOfT) throws JsonSyntaxException {
-    //     x=99
+    //      ...
+    //      public <T> T fromJson(JsonElement json, Class<T> classOfT) throws JsonSyntaxException {
+    //      ...
 
-    inline fun <reified T : Any> Gson.fromJson(json: JsonElement): T = this.fromJson(json, T::class.java)
+    //inline fun <reified T : Any> Gson.fromJson(json: JsonElement): T = this.fromJson(json, T::class.java)
+    //"Error:(294, 5) Kotlin: Local inline functions are not yet supported in inline functions"
+
 
     // Consuming a nullable Boolean
 
-    val b: Boolean? = (x = 99)
+    val bbo: Boolean? = false
 
-    if (b == true) {
-        x = 99
+    if (bbo == true) {
+
     } else {
     // `b` is false or null
     }
