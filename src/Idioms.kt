@@ -13,7 +13,7 @@ import java.nio.file.Paths
 
  */
 
-// Creating a singleton (may not be local!)
+// Creating a singleton (must not be local!)
 object Resource {
     val name = "Name"
 }
